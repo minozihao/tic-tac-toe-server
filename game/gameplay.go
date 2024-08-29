@@ -45,8 +45,15 @@ type State struct {
 // predefined errors
 
 var (
-	GameIdNotfoundErr  = errors.New("game id not found")
-	InvalidPlayerIdErr = errors.New("invalid player id")
+	GameIdNotfoundErr          = errors.New("game id not found")
+	InvalidPlayerIdErr         = errors.New("invalid player id")
+	AlreadyJoinGameErr         = errors.New("you have already join this game. please play a move")
+	GameFilledWithMaxPlayerErr = errors.New("game is filled with 2 players already. try joining another game")
+	DuplicatePlayerNameErr     = errors.New("player name already taken. please use another name")
+	GameAlreadyFinishedErr     = errors.New("game finished")
+	AnotherPlayerMoveTurnErr   = errors.New("invalid move. Please wait for other player to move")
+	InvalidMoveErr             = errors.New("invalid move. constraints: 0 <= row < 3, 0 <= column < 3")
+	MovePositionFilledErr      = errors.New("invalid move. position is filled")
 )
 
 type NewGameFactory struct{}
@@ -69,10 +76,14 @@ func (g *Game) Join(gameId string, playerId string, playerName string) error {
 		return InvalidPlayerIdErr
 	}
 	if playerId == g.Player1Id || playerId == g.Player2Id {
-		return errors.New("you have already join this game. please play a move")
+		return AlreadyJoinGameErr
 	}
 	if g.Player2Id != "" {
-		return errors.New("game is filled with 2 players already. try joining another game")
+		return GameFilledWithMaxPlayerErr
+	}
+	// name already taken
+	if playerName == g.Player1Name {
+		return DuplicatePlayerNameErr
 	}
 
 	g.Player2Id = playerId
@@ -89,23 +100,23 @@ func (g *Game) Move(playerId string, row int, col int) error {
 	defer g.mu.Unlock()
 	// state check
 	if g.State.End {
-		return errors.New("game finished")
+		return GameAlreadyFinishedErr
 	}
 	if playerId != g.Player1Id && playerId != g.Player2Id {
 		return InvalidPlayerIdErr
 	}
 	// player turn check
 	if (g.State.Player2Turn && playerId != g.Player2Id) || (!g.State.Player2Turn && playerId != g.Player1Id) {
-		return errors.New("invalid move. Please wait for other player to move")
+		return AnotherPlayerMoveTurnErr
 	}
 
 	// boundary check
 	if row < 0 || col < 0 || row >= n || col >= n {
-		return errors.New("invalid move. constraints: 0 <= row < 3, 0 <= column < 3")
+		return InvalidMoveErr
 	}
 	// position filled check
 	if g.Board[row][col] != 0 {
-		return errors.New("invalid move. position is filled")
+		return MovePositionFilledErr
 	}
 
 	// fill position for current move
@@ -126,9 +137,9 @@ func (g *Game) Move(playerId string, row int, col int) error {
 
 	// check for wins
 	if math.Abs(float64(g.runningSum.rowSum[row])) == float64(n) ||
-		math.Abs(float64(g.runningSum.rowSum[row])) == float64(n) ||
-		math.Abs(float64(g.runningSum.rowSum[row])) == float64(n) ||
-		math.Abs(float64(g.runningSum.rowSum[row])) == float64(n) {
+		math.Abs(float64(g.runningSum.columnSum[row])) == float64(n) ||
+		math.Abs(float64(g.runningSum.diagonalSum)) == float64(n) ||
+		math.Abs(float64(g.runningSum.reverseDiagonalSum)) == float64(n) {
 		g.State.End = true
 		if g.State.Player2Turn {
 			g.State.Player2Won = true
