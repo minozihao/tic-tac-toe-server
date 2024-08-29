@@ -1,0 +1,263 @@
+{
+	"info": {
+		"_postman_id": "bbbe2cf4-7d3e-49f3-a720-2a7cd3007c41",
+		"name": "TicTacToeServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25190340"
+	},
+	"item": [
+		{
+			"name": "createNewSession",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/session",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"session"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCurrentSession",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "e53af277-6548-4ff8-bb01-e36eb258431a",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/session",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"session"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteSession",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "e53af277-6548-4ff8-bb01-e36eb258431a",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/session",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"session"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createNewGame",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "f159d33a-0685-436c-a118-f093abfc31a8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerName\": \"bob\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/games",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listOpenGames",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "f46bdb1c-9f63-4af6-b9af-8fecdfbed531",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/games",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGameState",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "f159d33a-0685-436c-a118-f093abfc31a8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/games/d54ad8ee-c179-416e-b6f1-3d51bba3df01",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"games",
+						"d54ad8ee-c179-416e-b6f1-3d51bba3df01"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "joinOpenGame",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "f159d33a-0685-436c-a118-f093abfc31a8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerName\": \"john\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/games/d54ad8ee-c179-416e-b6f1-3d51bba3df01/join",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"games",
+						"d54ad8ee-c179-416e-b6f1-3d51bba3df01",
+						"join"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "playMove",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "f159d33a-0685-436c-a118-f093abfc31a8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerId\": \"1990ec96-9c22-47f3-8179-243ac6daf4cf\",\n    \"row\": 2,\n    \"column\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/games/d54ad8ee-c179-416e-b6f1-3d51bba3df01/play",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"games",
+						"d54ad8ee-c179-416e-b6f1-3d51bba3df01",
+						"play"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteGame",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "f159d33a-0685-436c-a118-f093abfc31a8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerId\": \"7b5151d0-6752-46b9-ae9a-871fdf968a0b\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/games/d54ad8ee-c179-416e-b6f1-3d51bba3df01",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"games",
+						"d54ad8ee-c179-416e-b6f1-3d51bba3df01"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
