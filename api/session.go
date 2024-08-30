@@ -56,6 +56,9 @@ func (s *Session) GetGameState(gameId string) (string, error) {
 
 // JoinGame join the game and returns a player2 id
 func (s *Session) JoinGame(gameId, playerName string) (string, error) {
+	if s.ActiveGame == nil {
+		return "", NoActiveGameInSessionErr
+	}
 	player2Id := uuid.NewString()
 	err := s.ActiveGame.Join(gameId, player2Id, playerName)
 	if err != nil {
@@ -66,6 +69,9 @@ func (s *Session) JoinGame(gameId, playerName string) (string, error) {
 
 // EndGame remove the game from active game field in session and return the game pointer
 func (s *Session) EndGame(gameId, playerId string) (*game.Game, error) {
+	if s.ActiveGame == nil {
+		return nil, NoActiveGameInSessionErr
+	}
 	if err := s.ActiveGame.EndGame(gameId, playerId); err != nil {
 		return nil, err
 	}
@@ -76,6 +82,9 @@ func (s *Session) EndGame(gameId, playerId string) (*game.Game, error) {
 
 // PlayMove play a legal move and returns the game pointer
 func (s *Session) PlayMove(gameId string, playerId string, row int, col int) (*game.Game, error) {
+	if s.ActiveGame == nil {
+		return nil, NoActiveGameInSessionErr
+	}
 	if s.ActiveGame == nil {
 		return nil, NoActiveGameInSessionErr
 	}
