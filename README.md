@@ -1,6 +1,4 @@
 # Tic-Tac-Toe Server
-
-from https://gist.github.com/silas
 Build a tic-tac-toe game server with a REST/JSON API in Go.
 
 Requirements:
@@ -36,10 +34,6 @@ The game state should include:
 * when the game finishes, who won or if it was a draw
 
 Store sessions and games in memory and apply appropriate locking to ensure changes to the data are safe (don't worry about optimizing locking or anything like that).
-
-Once completed upload the project to GitHub and share it with [@silas](https://github.com/silas).
-
-Before I dig into the code I'm going to spin up the server and attempt to play a game. You should either include enough error handling such that I can figure out the parameters using the error messages (preferred) or include example requests for endpoints that require input parameters.
 
 How to prioritize work:
 * completeness and correctness over everything else
